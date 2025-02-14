@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>탁구 경기 시간 계산기</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: left; padding: 20px; }
+        input, select, button { margin: 10px; padding: 10px; font-size: 16px; }
+        #result { margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h2>탁구 경기 시간 계산기</h2>
+    <label>팀 수:</label>
+    <input type="number" id="numTeams" value="5" min="2">
+    <br>
+    <label>예선 방식:</label>
+    <select id="tournamentPrelim">
+        <option value="league">리그전</option>
+        <option value="knockout">토너먼트</option>
+    </select>
+    <br>
+    <label>경기 방식 (예선):</label>
+    <select id="matchTypePrelim">
+        <option value="single">단판</option>
+        <option value="3set">3판 2선</option>
+        <option value="5set">5판 3선</option>
+    </select>
+    <br>
+    <label>경기 구성 (예선):</label>
+    <select id="matchFormatPrelim">
+        <option value="3">단단복 (3경기)</option>
+        <option value="5">단단복단단 (5경기)</option>
+    </select>
+    <br>
+    <label>예선 조별 탁구대 개수:</label>
+    <input type="number" id="numTablesPrelim" value="3" min="1">
+    <br>
+    <label>본선 방식:</label>
+    <select id="tournamentFinal">
+        <option value="league">리그전</option>
+        <option value="knockout">토너먼트</option>
+    </select>
+    <br>
+    <label>경기 방식 (본선):</label>
+    <select id="matchTypeFinal">
+        <option value="single">단판</option>
+        <option value="3set">3판 2선</option>
+        <option value="5set">5판 3선</option>
+    </select>
+    <br>
+    <label>경기 구성 (본선):</label>
+    <select id="matchFormatFinal">
+        <option value="3">단단복 (3경기)</option>
+        <option value="5">단단복단단 (5경기)</option>
+    </select>
+    <br>
+    <label>본선 전체 탁구대 개수:</label>
+    <input type="number" id="numTablesFinal" value="3" min="1">
+    <br>
+    <button onclick="calculateTime()">계산하기</button>
+    <p id="result"></p>
+
+    <script>
+        function calculateTime() {
+            let numTeams = parseInt(document.getElementById("numTeams").value);
+            let tournamentPrelim = document.getElementById("tournamentPrelim").value;
+            let matchTypePrelim = document.getElementById("matchTypePrelim").value;
+            let matchFormatPrelim = parseInt(document.getElementById("matchFormatPrelim").value);
+            let numTablesPrelim = parseInt(document.getElementById("numTablesPrelim").value);
+            let tournamentFinal = document.getElementById("tournamentFinal").value;
+            let matchTypeFinal = document.getElementById("matchTypeFinal").value;
+            let matchFormatFinal = parseInt(document.getElementById("matchFormatFinal").value);
+            let numTablesFinal = parseInt(document.getElementById("numTablesFinal").value);
+            
+            function getTimePerGame(matchType) {
+                if (matchType === "single") return 5;
+                if (matchType === "3set") return 10;
+                if (matchType === "5set") return 15;
+            }
+            
+            let timePerMatchPrelim = matchFormatPrelim * getTimePerGame(matchTypePrelim);
+            let timePerMatchFinal = matchFormatFinal * getTimePerGame(matchTypeFinal);
+            
+            let totalTimePrelim = 0;
+            let totalTimeFinal = 0;
+            
+            if (tournamentPrelim === "league") {
+                let numMatches = (numTeams * (numTeams - 1)) / 2;
+                let numRounds = Math.ceil(numMatches / numTablesPrelim);
+                totalTimePrelim = numRounds * timePerMatchPrelim;
+            } else if (tournamentPrelim === "knockout") {
+                let numRounds = Math.ceil(Math.log2(numTeams));
+                totalTimePrelim = numRounds * timePerMatchPrelim;
+            }
+            
+            if (tournamentFinal === "league") {
+                let numMatches = (numTeams * (numTeams - 1)) / 2;
+                let numRounds = Math.ceil(numMatches / numTablesFinal);
+                totalTimeFinal = numRounds * timePerMatchFinal;
+            } else if (tournamentFinal === "knockout") {
+                let numRounds = Math.ceil(Math.log2(numTeams));
+                totalTimeFinal = numRounds * timePerMatchFinal;
+            }
+            
+            let totalTime = totalTimePrelim + totalTimeFinal;
+            
+            let hoursPrelim = Math.floor(totalTimePrelim / 60);
+            let minutesPrelim = totalTimePrelim % 60;
+            let hoursFinal = Math.floor(totalTimeFinal / 60);
+            let minutesFinal = totalTimeFinal % 60;
+            let hoursTotal = Math.floor(totalTime / 60);
+            let minutesTotal = totalTime % 60;
+            
+            document.getElementById("result").innerText = 
+                `예선 예상 소요 시간: ${hoursPrelim}시간 ${minutesPrelim}분\n` +
+                `본선 예상 소요 시간: ${hoursFinal}시간 ${minutesFinal}분\n` +
+                `총 예상 소요 시간: ${hoursTotal}시간 ${minutesTotal}분`;
+        }
+    </script>
+</body>
+</html>
