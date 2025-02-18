@@ -12,21 +12,21 @@
 
     <fieldset>
         <legend>예선 설정</legend>
-        <label>팀 수:</label>
+        <label>한 조에 몇명인가요?:</label>
         <input type="number" id="numTeamsPrelim" value="5" min="2">
         <label>경기 방식:</label>
         <select id="tournamentTypePrelim">
-            <option value="league">리그전</option>
+            <option value="league" selected>리그전</option>
             <option value="knockout">토너먼트</option>
         </select>
         <label>경기 유형:</label>
         <select id="matchTypePrelim">
             <option value="single">단판</option>
             <option value="3set">3판 2선</option>
-            <option value="5set">5판 3선</option>
+            <option value="5set" selected>5판 3선</option>
         </select>
-        <label>탁구대 개수:</label>
-        <input type="number" id="numTablesPrelim" value="3" min="1">
+        <label>한 조당 탁구대 개수:</label>
+        <input type="number" id="numTablesPrelim" value="1" min="1">
     </fieldset>
 
     <fieldset>
@@ -36,16 +36,16 @@
         <label>경기 방식:</label>
         <select id="tournamentTypeFinal">
             <option value="league">리그전</option>
-            <option value="knockout">토너먼트</option>
+            <option value="knockout" selected>토너먼트</option>
         </select>
         <label>경기 유형:</label>
         <select id="matchTypeFinal">
             <option value="single">단판</option>
             <option value="3set">3판 2선</option>
-            <option value="5set">5판 3선</option>
+            <option value="5set" selected>5판 3선</option>
         </select>
         <label>탁구대 개수:</label>
-        <input type="number" id="numTablesFinal" value="3" min="1">
+        <input type="number" id="numTablesFinal" value="1" min="1">
     </fieldset>
 
     <button onclick="calculateTime()">계산하기</button>
