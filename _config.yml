@@ -1,2 +1,8 @@
 theme: null
 markdown: kramdown
+default_teams: 5
+default_tables: 3
+match_types:
+  single: 5
+  3set: 10
+  5set: 15
