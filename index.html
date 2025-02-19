@@ -12,12 +12,13 @@
 
     <fieldset>
         <legend>예선 설정</legend>
-        <label>한 조에 몇명인가요?:</label>
+        <label>한조당 팀 수:</label>
         <input type="number" id="numTeamsPrelim" value="5" min="2">
+        <label>한조당 탁구대 개수:</label>
+        <input type="number" id="numTablesPrelim" value="1" min="1">
         <label>경기 방식:</label>
-        <select id="tournamentTypePrelim">
+        <select id="tournamentTypePrelim" disabled>
             <option value="league" selected>리그전</option>
-            <option value="knockout">토너먼트</option>
         </select>
         <label>경기 유형:</label>
         <select id="matchTypePrelim">
@@ -25,19 +26,28 @@
             <option value="3set">3판 2선</option>
             <option value="5set" selected>5판 3선</option>
         </select>
-        <label>한 조당 탁구대 개수:</label>
-        <input type="number" id="numTablesPrelim" value="1" min="1">
+        
     </fieldset>
 
     <fieldset>
         <legend>본선 설정</legend>
-        <label>팀 수:</label>
-        <input type="number" id="numTeamsFinal" value="5" min="2">
         <label>경기 방식:</label>
-        <select id="tournamentTypeFinal">
+        <select id="tournamentTypeFinal" onchange="toggleFinalInput()">
             <option value="league">리그전</option>
             <option value="knockout" selected>토너먼트</option>
         </select>
+        <div id="finalTeamsContainer">
+            <label>본선 시작은 몇 강부터?:</label>
+            <select id="numTeamsFinal">
+                <option value="2">결승</option>
+                <option value="4">4강</option>
+                <option value="8">8강</option>
+                <option value="16">16강</option>
+                <option value="32">32강</option>
+                <option value="64">64강</option>
+                <option value="128">128강</option>
+            </select>
+        </div>
         <label>경기 유형:</label>
         <select id="matchTypeFinal">
             <option value="single">단판</option>
